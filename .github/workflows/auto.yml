@@ -2,7 +2,7 @@ name: HFUTSCNetworkStudy
 
 on:
   schedule:
-    - cron: "*/6 * * * *"
+    - cron: "0 22 * * *"
   watch:
     types: [ started ]
 
