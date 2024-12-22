@@ -1,29 +1,16 @@
 name: HFUTSCNetworkStudy
 
 on:
-  schedule:
-    - cron: "0 22 * * *"
-  workflow_dispatch: # 支持手动触发
+#  schedule:
+#    - cron: "0 22 * * *"
   watch:
-    types: [started]
+    types: [ started ]
 
-permissions:
-  contents: read # 权限配置，GitHub Actions 无需设置 secrets 权限
 
 jobs:
   checkin:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug ENABLED value
-        run: echo "ENABLED=${{ secrets.ENABLED }}"
-        shell: bash
-      - name: Check if enabled
-        run: |
-          if [ "${{ secrets.ENABLED }}" != "true" ]; then
-            echo "Workflow is paused. Exiting..."
-            exit 0
-          fi
-        shell: /usr/bin/bash
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Python 3.11
