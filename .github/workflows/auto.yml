@@ -3,6 +3,8 @@ name: HFUTSCNetworkStudy
 on:
   schedule:
     - cron: "0 22 * * *"
+  watch:
+    types: [started]
   workflow_dispatch:
 
 permissions:
