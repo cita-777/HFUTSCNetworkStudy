@@ -3,14 +3,12 @@ name: HFUTSCNetworkStudy
 on:
   schedule:
     - cron: "0 22 * * *"
+  workflow_dispatch: # 支持手动触发
   watch:
     types: [started]
-  workflow_dispatch:
 
 permissions:
-  contents: read
-  actions: read
-  secrets: read
+  contents: read # 权限配置，GitHub Actions 无需设置 secrets 权限
 
 jobs:
   checkin:
