@@ -1,10 +1,10 @@
 name: HFUTSCNetworkStudy
 
 on:
-  schedule:
-    - cron: "0 22 * * *"   # 每天22:00运行
   watch:
-    types: [ started ]
+    types: [started]           # 仓库被 star 时触发
+  schedule:
+    - cron: "0 22 * * *"       # 每天 22:00 定时触发
 
 jobs:
   checkin:
@@ -27,10 +27,16 @@ jobs:
         id: run_checkin
         run: |
           python3 checkin.py --key_session=${{ secrets.KEY_SESSION }} --secret=${{ secrets.SECRET }} --page_max=${{ secrets.PAGE_MAX }}
-          # 模拟失败，用于测试 Server酱通知
-          exit 1
+          echo "CHECKIN_EXIT_CODE=$?" >> $GITHUB_ENV
 
-      - name: Send Server酱 notification if failed
-        if: ${{ failure() }}
-        run: |
-          curl -s "https://sctapi.ftqq.com/SCT300725TtIk8EnKAmGGhutD5rwK6nGYs.send?title=[HFUTSCNetworkStudy]%20❌%20Checkin%20Job%20Failed&desp=仓库:%20${{ github.repository }}%0A运行号:%20${{ github.run_number }}%0A查看详情:%20${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
+      - name: Send ServerChan notification if failed
+        if: ${{ env.CHECKIN_EXIT_CODE != 0 }}
+        uses: yakumioto/serverchan-action@v2
+        with:
+          key: ${{ secrets.SCKEY }}
+          text: "[HFUTSCNetworkStudy] ❌ Checkin Job Failed"
+          desp: |
+            仓库: ${{ github.repository }}
+            运行号: ${{ github.run_number }}
+            查看详情: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          # openid: 可选填，如果你想抄送其他关注测试号的 openid
