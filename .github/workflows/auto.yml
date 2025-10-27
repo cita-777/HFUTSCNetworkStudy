@@ -33,7 +33,7 @@ jobs:
         if: steps.run_checkin.outcome == 'failure'
         uses: yakumioto/serverchan-action@v2
         with:
-          key: ${{ secrets.SCKEY }}
+          key: ${{SCT300725TtIk8EnKAmGGhutD5rwK6nGYs}}
           text: "[HFUTSCNetworkStudy] ❌ Checkin Job Failed"
           desp: |
             仓库: ${{ github.repository }}
