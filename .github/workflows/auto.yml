@@ -2,7 +2,7 @@ name: HFUTSCNetworkStudy
 
 on:
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "0 22 * * *"   # 每天22:00运行
   watch:
     types: [ started ]
 
@@ -27,12 +27,10 @@ jobs:
         id: run_checkin
         run: |
           python3 checkin.py --key_session=${{ secrets.KEY_SESSION }} --secret=${{ secrets.SECRET }} --page_max=${{ secrets.PAGE_MAX }}
-          # 模拟错误，用于测试通知
+          # 模拟失败，用于测试 Server酱通知
           exit 1
 
       - name: Send Server酱 notification if failed
         if: ${{ failure() }}
         run: |
-          TITLE="[HFUTSCNetworkStudy] ❌ Checkin Job Failed"
-          BODY="仓库: ${{ github.repository }}%0A运行号: ${{ github.run_number }}%0A查看详情: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          curl -s "https://sctapi.ftqq.com/SCT300725TtIk8EnKAmGGhutD5rwK6nGYs.send?title=${TITLE}&desp=${BODY}"
+          curl -s "https://sctapi.ftqq.com/SCT300725TtIk8EnKAmGGhutD5rwK6nGYs.send?title=[HFUTSCNetworkStudy]%20❌%20Checkin%20Job%20Failed&desp=仓库:%20${{ github.repository }}%0A运行号:%20${{ github.run_number }}%0A查看详情:%20${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
