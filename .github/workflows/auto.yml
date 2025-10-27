@@ -28,7 +28,8 @@ jobs:
         run: |
           python3 checkin.py --key_session=${{ secrets.KEY_SESSION }} --secret=${{ secrets.SECRET }} --page_max=${{ secrets.PAGE_MAX }}
           echo "CHECKIN_EXIT_CODE=$?" >> $GITHUB_ENV
-
+          # 模拟失败，用于测试 Server酱通知
+          exit 1
       - name: Send ServerChan notification if failed
         if: ${{ env.CHECKIN_EXIT_CODE != 0 }}
         uses: yakumioto/serverchan-action@v2
