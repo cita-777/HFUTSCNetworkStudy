@@ -34,7 +34,7 @@ jobs:
         uses: yakumioto/serverchan-action@v2
         with:
           key: "SCT300725TtIk8EnKAmGGhutD5rwK6nGYs"
-          ext: "NetworkStudy Failed"
+          text: "NetworkStudy Failed"  # 修复：将 'ext' 改为 'text'，因为 action 不支持 'ext' 参数
           desp: |
             仓库: ${{ github.repository }}
             运行号: ${{ github.run_number }}
