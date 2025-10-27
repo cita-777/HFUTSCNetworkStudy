@@ -34,7 +34,7 @@ jobs:
         uses: yakumioto/serverchan-action@v2
         with:
           key: "SCT300725TtIk8EnKAmGGhutD5rwK6nGYs"
-          text: "[HFUTSCNetworkStudy] ❌ Checkin Job Failed"
+          ext: "NetworkStudy Failed"
           desp: |
             仓库: ${{ github.repository }}
             运行号: ${{ github.run_number }}
